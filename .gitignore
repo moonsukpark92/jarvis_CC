@@ -1,0 +1,40 @@
+# API Keys & Secrets
+.env
+*.txt
+!requirements.txt
+jarvis_Claude API.txt
+open AI key.txt
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+
+# Temp
+*.tmp
+*.wav
+*.mp3
+
+# Reference repos (too large for git)
+reference_repos/
+
+# LiveKit server binary
+livekit-server/
+
+# Old versions
+jarvis_cc/__pycache__/

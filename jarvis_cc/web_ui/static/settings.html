@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARVIS-CC Settings</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'Segoe UI', '맑은 고딕', sans-serif;
+    background: #0D1117; color: #E6EDF3;
+    max-width: 640px; margin: 0 auto; padding: 24px;
+  }
+  h1 { color: #00B4FF; font-size: 24px; margin-bottom: 8px; }
+  h2 { color: #8B949E; font-size: 14px; margin-bottom: 24px; font-weight: normal; }
+  .section { background: #161B22; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+  .section-title { color: #58A6FF; font-size: 14px; font-weight: 600; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+  .field { margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+  .field label { color: #8B949E; font-size: 13px; flex: 0 0 140px; }
+  .field select, .field input[type="text"], .field input[type="number"], .field input[type="range"] {
+    background: #0D1117; color: #E6EDF3; border: 1px solid #30363D; border-radius: 6px;
+    padding: 6px 10px; font-size: 13px; flex: 1;
+  }
+  .field input[type="range"] { border: none; padding: 0; }
+  .field select:focus, .field input:focus { border-color: #00B4FF; outline: none; }
+  .toggle { position: relative; width: 44px; height: 24px; flex: 0 0 44px; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background: #30363D; border-radius: 12px; transition: 0.3s; }
+  .toggle .slider:before { content: ""; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px;
+    background: #E6EDF3; border-radius: 50%; transition: 0.3s; }
+  .toggle input:checked + .slider { background: #00B4FF; }
+  .toggle input:checked + .slider:before { transform: translateX(20px); }
+  .btn { background: #00B4FF; color: #0D1117; border: none; border-radius: 6px; padding: 8px 20px;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+  .btn:hover { background: #1CA7E0; }
+  .btn-secondary { background: #30363D; color: #E6EDF3; }
+  .btn-secondary:hover { background: #484F58; }
+  .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+  .range-value { color: #8B949E; font-size: 12px; min-width: 40px; text-align: right; margin-left: 8px; }
+  #status { color: #3FB950; font-size: 12px; margin-top: 8px; text-align: right; opacity: 0; transition: opacity 0.3s; }
+  #status.show { opacity: 1; }
+</style>
+</head>
+<body>
+<h1>JARVIS-CC</h1>
+<h2>Just A Rather Very Intelligent System for Claude Code</h2>
+
+<div class="section">
+  <div class="section-title">TTS (Text-to-Speech)</div>
+  <div class="field">
+    <label>음성</label>
+    <select id="tts_voice"></select>
+  </div>
+  <div class="field">
+    <label>속도</label>
+    <select id="tts_rate">
+      <option value="-30%">느리게</option>
+      <option value="-15%">약간 느리게</option>
+      <option value="+0%" selected>보통</option>
+      <option value="+15%">약간 빠르게</option>
+      <option value="+30%">빠르게</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>미리듣기</label>
+    <button class="btn btn-secondary" onclick="preview()">미리듣기</button>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">퍼소나</div>
+  <div class="field">
+    <label>응답 모드</label>
+    <select id="persona_mode">
+      <option value="brief">Brief (핵심 1문장)</option>
+      <option value="normal" selected>Normal (2-3문장)</option>
+      <option value="full">Full (전문 낭독)</option>
+      <option value="bypass">Bypass (원문 그대로)</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>성격 스타일</label>
+    <select id="persona_style">
+      <option value="butler" selected>Butler (버틀러)</option>
+      <option value="casual">Casual (캐주얼)</option>
+      <option value="professional">Professional (전문가)</option>
+    </select>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">HUD 오버레이</div>
+  <div class="field">
+    <label>HUD 활성화</label>
+    <label class="toggle"><input type="checkbox" id="hud_enabled" checked><span class="slider"></span></label>
+  </div>
+  <div class="field">
+    <label>투명도</label>
+    <input type="range" id="hud_opacity" min="0.3" max="1.0" step="0.05" value="0.9">
+    <span class="range-value" id="hud_opacity_val">90%</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">사운드</div>
+  <div class="field">
+    <label>사운드 효과</label>
+    <label class="toggle"><input type="checkbox" id="sound_enabled" checked><span class="slider"></span></label>
+  </div>
+  <div class="field">
+    <label>볼륨</label>
+    <input type="range" id="sound_volume" min="0" max="1" step="0.05" value="0.7">
+    <span class="range-value" id="sound_volume_val">70%</span>
+  </div>
+</div>
+
+<div class="actions">
+  <div id="status"></div>
+  <button class="btn btn-secondary" onclick="loadSettings()">초기화</button>
+  <button class="btn" onclick="saveSettings()">저장</button>
+</div>
+
+<script>
+const API = '';
+
+async function loadVoices() {
+  try {
+    const res = await fetch(API + '/api/voices');
+    const data = await res.json();
+    const sel = document.getElementById('tts_voice');
+    sel.innerHTML = '';
+    (data.voices || []).forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v.name;
+      opt.textContent = `${v.name} (${v.gender})`;
+      sel.appendChild(opt);
+    });
+  } catch(e) { console.error('Failed to load voices:', e); }
+}
+
+async function loadSettings() {
+  try {
+    const res = await fetch(API + '/api/settings');
+    const s = await res.json();
+    if(s.tts_voice) document.getElementById('tts_voice').value = s.tts_voice;
+    if(s.tts_rate) document.getElementById('tts_rate').value = s.tts_rate;
+    if(s.persona_mode) document.getElementById('persona_mode').value = s.persona_mode;
+    if(s.persona_style) document.getElementById('persona_style').value = s.persona_style;
+    document.getElementById('hud_enabled').checked = s.hud_enabled !== false;
+    document.getElementById('hud_opacity').value = s.hud_opacity || 0.9;
+    document.getElementById('sound_enabled').checked = s.sound_enabled !== false;
+    document.getElementById('sound_volume').value = s.sound_volume || 0.7;
+    updateRangeValues();
+  } catch(e) { console.error('Failed to load settings:', e); }
+}
+
+async function saveSettings() {
+  const data = {
+    tts_voice: document.getElementById('tts_voice').value,
+    tts_rate: document.getElementById('tts_rate').value,
+    persona_mode: document.getElementById('persona_mode').value,
+    persona_style: document.getElementById('persona_style').value,
+    hud_enabled: document.getElementById('hud_enabled').checked,
+    hud_opacity: parseFloat(document.getElementById('hud_opacity').value),
+    sound_enabled: document.getElementById('sound_enabled').checked,
+    sound_volume: parseFloat(document.getElementById('sound_volume').value),
+  };
+  try {
+    await fetch(API + '/api/settings', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)});
+    showStatus('설정이 저장되었습니다');
+  } catch(e) { showStatus('저장 실패: ' + e.message); }
+}
+
+async function preview() {
+  try {
+    const voice = document.getElementById('tts_voice').value;
+    const res = await fetch(API + '/api/preview', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({text:'안녕하세요, 박대표님. 자비스입니다. 음성 테스트 중입니다.', voice})
+    });
+    if(res.ok) {
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      new Audio(url).play();
+    }
+  } catch(e) { showStatus('미리듣기 실패: ' + e.message); }
+}
+
+function updateRangeValues() {
+  document.getElementById('hud_opacity_val').textContent = Math.round(document.getElementById('hud_opacity').value * 100) + '%';
+  document.getElementById('sound_volume_val').textContent = Math.round(document.getElementById('sound_volume').value * 100) + '%';
+}
+
+function showStatus(msg) {
+  const el = document.getElementById('status');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+document.getElementById('hud_opacity').oninput = updateRangeValues;
+document.getElementById('sound_volume').oninput = updateRangeValues;
+
+loadVoices().then(loadSettings);
+</script>
+</body>
+</html>

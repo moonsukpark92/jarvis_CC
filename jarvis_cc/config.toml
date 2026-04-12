@@ -1,0 +1,45 @@
+# JARVIS-CC v3 기본 설정
+# 사용자 설정: ~/.jarvis-cc/config.toml 에 복사 후 수정
+
+[porcupine]
+access_key = ""          # https://picovoice.ai/ 에서 발급
+keyword = "jarvis"
+sensitivity = 0.5
+device_index = -1        # -1 = 자동 선택
+
+[tts]
+voice = "ko-KR-InJoonNeural"   # edge-tts 한국어 남성
+rate = "+15%"                  # 빠른 말하기 속도
+volume = "+0%"
+fallback = "sapi"        # edge-tts 실패 시 Windows SAPI
+num_workers = 2
+queue_size = 50
+
+[persona]
+mode = "normal"          # brief / normal / full / bypass
+style = "butler"         # butler / casual / professional
+owner_name = "박대표님"
+
+[monitor]
+debounce_ms = 2000
+poll_interval = 0.5
+max_spoken_ids = 2000
+
+[hud]
+enabled = true
+opacity = 0.9
+width = 320
+height = 400
+theme_bg = "#0D1117"
+theme_accent = "#00B4FF"
+
+[sound]
+enabled = true
+volume = 0.7
+
+[hotkey]
+hotkey = "<cmd>+j"
+
+[web_ui]
+port = 8910
+host = "127.0.0.1"
