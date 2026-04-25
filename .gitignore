@@ -1,40 +1,63 @@
-# API Keys & Secrets
+# --- Secrets ---
 .env
+.env.*
+!.env.example
 *.txt
 !requirements.txt
+!requirements-dev.txt
 jarvis_Claude API.txt
 open AI key.txt
 
-# Python
+# --- Python ---
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
 *.egg-info/
-dist/
+.eggs/
 build/
+dist/
+.venv/
+venv/
+env/
 
-# IDE
+# --- Tooling caches ---
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+
+# --- IDE / OS ---
 .vscode/
 .idea/
 *.swp
-
-# OS
 Thumbs.db
 .DS_Store
 
-# Logs
+# --- Logs & runtime artefacts ---
 *.log
+logs/
+realtimesst.log
 
-# Temp
+# --- Temp media ---
 *.tmp
 *.wav
 *.mp3
+*.m4a
+*.opus
 
-# Reference repos (too large for git)
+# --- ML model caches (huggingface, torch hub) ---
+.cache/
+models/
+*.bin
+*.onnx
+*.gguf
+
+# --- External / vendored (gitignored on purpose) ---
 reference_repos/
-
-# LiveKit server binary
+reference_v6/
 livekit-server/
+mpv/
 
-# Old versions
+# --- Old version artefacts (should not appear once migrated) ---
 jarvis_cc/__pycache__/

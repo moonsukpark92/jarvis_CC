@@ -1,0 +1,38 @@
+# Active version: jarvis_v5 (DAVIS) — runtime dependencies.
+# For dev/test extras, see requirements-dev.txt.
+# Old-version deps live in archive/v?_*/requirements.txt.
+
+# --- LLM ---
+anthropic>=0.90
+
+# --- Speech-to-Text ---
+RealtimeSTT>=0.3
+faster-whisper>=1.0
+torch>=2.0
+torchaudio>=2.0
+
+# --- Text-to-Speech ---
+edge-tts>=6.0
+RealtimeTTS[edge]>=0.6
+
+# --- Audio I/O ---
+pygame>=2.5
+sounddevice>=0.5
+pyaudio>=0.2
+
+# --- Numerics (memory.py) ---
+numpy>=1.26
+
+# --- System tray / hotkey / overlay ---
+pystray>=0.2
+pillow>=10.0
+pynput>=1.7
+
+# --- Telegram bridge (jarvis_v5/telegram_bot.py) ---
+python-telegram-bot>=21.0
+
+# --- Google tools (jarvis_v5/google_tools.py) ---
+google-api-python-client>=2.130
+google-auth>=2.30
+google-auth-oauthlib>=1.2
+google-auth-httplib2>=0.2

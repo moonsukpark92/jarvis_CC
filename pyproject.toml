@@ -1,0 +1,65 @@
+[project]
+name = "jarvis-v5"
+version = "5.0.0"
+description = "DAVIS — real-time Korean voice AI assistant (Anthropic + RealtimeSTT + edge-tts)."
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = [
+    "-q",
+    "--strict-markers",
+    "-m", "not requires_audio and not requires_api and not slow",
+]
+markers = [
+    "requires_audio: needs a real microphone/speaker; skipped by default",
+    "requires_api:   needs Anthropic/Google/Telegram credentials; skipped by default",
+    "slow:           takes more than ~2 seconds",
+]
+# archive/ trees are excluded from test collection so old-version code never runs in CI.
+norecursedirs = [
+    "archive",
+    "reference_repos",
+    "reference_v6",
+    "livekit-server",
+    ".venv",
+    ".git",
+    "build",
+    "dist",
+    "node_modules",
+]
+asyncio_mode = "auto"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+extend-exclude = [
+    "archive",
+    "reference_repos",
+    "reference_v6",
+    "livekit-server",
+]
+
+[tool.ruff.lint]
+# Conservative rule set: pycodestyle, pyflakes, isort, bugbear, pyupgrade.
+select = ["E", "F", "I", "B", "UP", "W"]
+ignore = [
+    "E501",  # line too long — formatter handles this
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_ignores = true
+warn_return_any = false
+ignore_missing_imports = true
+exclude = [
+    "archive/",
+    "reference_repos/",
+    "reference_v6/",
+    "livekit-server/",
+]
