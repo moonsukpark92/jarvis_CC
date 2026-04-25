@@ -1,7 +1,11 @@
-# JARVIS-CC v3 — Claude Code 컨텍스트
+# JARVIS-CC v3 — Claude Code 컨텍스트 (archived)
 
+> ⚠️ **ARCHIVED — 활성 버전 아님.** 활성 트리는 `jarvis_v5/`이며, 이 문서는 v3(`archive/v3_jarvis_cc/`) 한정 컨텍스트입니다.
+> 루트 [CLAUDE.md](../../CLAUDE.md)와 [docs/VERSIONING.md](../../docs/VERSIONING.md)가 우선합니다.
+> 이 폴더의 코드는 빌드/테스트 대상이 아니며, 수정 금지입니다.
+>
 > **프로젝트**: JARVIS-CC (Just A Rather Very Intelligent System for Claude Code)
-> **경로**: `C:\Users\infow\cowork\jarvis project\jarvis_cc\`
+> **경로**: `archive/v3_jarvis_cc/` (이전: `jarvis_cc/`)
 > **목적**: 완전 자율 음성 AI 어시스턴트 — 웨이크워드 → Claude Code → TTS 응답
 
 ## 아키텍처
